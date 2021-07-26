@@ -59,4 +59,13 @@
             1px 0 8px #00FFFF; 
     pointer-events: none; 
     z-index: 1; 
+}
+.spider 
+{ 
+    width: 30px; 
+    height: 30px; 
+    position: absolute; 
+    transform-origin: center center; 
+    pointer-events: none; 
+    z-index: 2; 
 } 

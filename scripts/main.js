@@ -1,3 +1,11 @@
+// numéro de la vague
+let currentWave = 1;
+// enemie générer pas encore en jeu
+let spiders = [];
+// stocker les arraignées au fur et mesure de leur insertion
+let inGameSpiders = [];
+let currentLevel = 1;
+
 $(document).ready(init);
 
 // Système de changement de coordonnées qui consiste, à partir des coordonnées x et y d’un point dans l’espace d’un plan cartésien, à obtenir un vecteur constitué d’une distance et d’un angle vers un autre point du plan.
@@ -12,6 +20,7 @@ function cartesianToPolar (x1, y1, x2, y2)
         angle : -(Math.atan2(x, y) * 180 / Math.PI) 
     }; 
 }
+
 // Système de changement de coordonnées
 // Donne la distance entre 2 points
 function polarToCartesian (distance, angle) 
@@ -22,6 +31,18 @@ function polarToCartesian (distance, angle)
     }; 
 } 
 
+// Création suite de caractère permettant de créer des id
+function guid() 
+{
+    let group = function (groupLength)
+    {
+        return String(' ')
+        .repeat(groupLength) 
+        .split('') 
+        .map(e => crypto.getRandomValues(new Uint8Array(1))[0] % 16).map(e => e.toString(16).toUpperCase()).join('');
+    };
+    return group(8) + "-" + group(4) + "-" + group(4) + "-" + group(4) + "-" + group(12); 
+} 
 
  
 function init() 
@@ -33,4 +54,6 @@ function init()
     // écouteur au clic déclenche la fonction shoot
     $(document).on('click', shoot);
 
+    createWave(); 
+    renderWave();
 } 
