@@ -61,6 +61,10 @@ function shoot(e)
         { 
             duration: 1500, 
             easing: 'linear',
+            progress: function (animation, progression, timeLeft)
+            {
+                checkImpact({htmlElement: $(animation.elem),orientation: orientation}); 
+            },
             // Animation fini on supprime les tirs
             complete: function ()
             {
@@ -68,4 +72,108 @@ function shoot(e)
             }
         } 
     ); 
+}
+
+function checkImpact(bullet) 
+{
+    let touchedSpiders = inGameSpiders.filter(
+    function (e)
+    {
+        let bulletCoords = bullet.htmlElement.offset(); 
+        let spiderCoords = e.htmlElement.offset(); 
+        if (bullet.orientation.horizontal == 1 && bullet.orientation.vertical == 1)
+        {
+            if (bulletCoords.left + bullet.htmlElement.width() >= spiderCoords.left &&
+            bulletCoords.left <= spiderCoords.left + (e.htmlElement.width() * e.PV) &&
+            bulletCoords.top + bullet.htmlElement.height() >= spiderCoords.top &&
+            bulletCoords.top <= spiderCoords.top + (e.htmlElement.height() * e.PV))
+            {
+                return true;
+            }
+        }
+        if (bullet.orientation.horizontal == -1 && bullet.orientation.vertical == 1)
+        {
+            if (bulletCoords.left >= spiderCoords.left && bulletCoords.left + 
+                bullet.htmlElement.width() <= spiderCoords.left + (e.htmlElement.width() * e.PV) && 
+                bulletCoords.top + bullet.htmlElement.height() >= spiderCoords.top && 
+                bulletCoords.top <= spiderCoords.top + (e.htmlElement.height() * e.PV))
+            {
+                return true;
+            }
+        }
+        if (bullet.orientation.horizontal == 1 && bullet.orientation.vertical == -1)
+        {
+            if (bulletCoords.left + bullet.htmlElement.width() >= spiderCoords.left && 
+                bulletCoords.left <= spiderCoords.left + (e.htmlElement.width() * e.PV) &&
+                bulletCoords.top <= spiderCoords.top + (e.htmlElement.height() * e.PV) &&
+                bulletCoords.top + bullet.htmlElement.height() >= spiderCoords.top)
+            {
+                return true;
+            }
+        }
+        if (bullet.orientation.horizontal == -1 && bullet.orientation.vertical == -1)
+        {
+            if (bulletCoords.left <= spiderCoords.left + (e.htmlElement.width() * e.PV) && 
+                bulletCoords.left + bullet.htmlElement.width() >= spiderCoords.left && 
+                bulletCoords.top <= spiderCoords.top + (e.htmlElement.height() * e.PV) && 
+                bulletCoords.top + bullet.htmlElement.height() >= spiderCoords.top)
+            {
+                return true;
+            }
+        }
+        return false;
+    });
+    if (touchedSpiders.length > 0)
+    {
+        touchedSpiders.forEach(
+            function (e)
+            {
+                let position = e.htmlElement.offset(); 
+                let size = {width: e.htmlElement.width() * e.PV, height: e.htmlElement.height() * e.PV}; 
+                let decalage = $('.gameArea').offset(); 
+                let no = guid();
+                e.life--; 
+                bullet.htmlElement.remove(); 
+                if (e.life <= 0)
+                {
+                    // inGameSpiders.slice(inGameSpiders.indexOf(e), 1);
+                    // e.htmlElement.remove();
+                    inGameSpiders.splice(inGameSpiders.indexOf(e), 1); 
+                    e.htmlElement.remove();
+                    $('.gameArea').append('<img class="explosion"src="images/smoke1.png" data-id="' + no + '">');
+                    $('.explosion[data-id="' + no + '"]').css (
+                        {
+                            left: (position.left - decalage.left) + (size.width / 2) + 'px', 
+                            top: (position.top - decalage.top) + (size.height / 2 ) + 'px',
+                            transform: 'scale(' + e.PV + ')'
+                        }
+                    );
+                    $('.explosion[data-id="' + no + '"]').animate (
+                        {
+                            opacity: .5 
+                        },
+                        {
+                            duration: 600, 
+                            easing: 'linear', 
+                            progress: function (animation,progression, timeLeft)
+                            {
+                                let index =+ $(this).attr('src').substr(-5, 1);
+                                 if ((timeLeft < 500 && index ==  1) || 
+                                    (timeLeft < 400 && index == 2) || 
+                                    (timeLeft < 300 && index == 3) ||
+                                    (timeLeft < 200 && index == 4))
+                                {
+                                    $(this).attr('src', 'images/smoke' + (index + 1) + '.png');
+                                }
+                            },
+                            complete: function () 
+                            { 
+                                $('.gameArea').find(this).remove(); 
+                            } 
+                        }
+                    );
+                }
+            }
+        ); 
+    } 
 } 
