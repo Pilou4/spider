@@ -4,6 +4,7 @@ let currentWave = 1;
 let spiders = [];
 // stocker les arraignées au fur et mesure de leur insertion
 let inGameSpiders = [];
+let playerScore = 0 
 let currentLevel = 1;
 
 $(document).ready(init);

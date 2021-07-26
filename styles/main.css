@@ -77,4 +77,14 @@
     transform-origin: center center; 
     pointer-events: none; 
     z-index: 2; 
+}
+.points 
+{ 
+    position: absolute; 
+    z-index: 2; 
+    color: #FF8100; 
+    font-family: 'Fredererika the Great' 
+    font-size:80%; 
+    pointer-events: none; 
+    font-weight: bold; 
 } 
