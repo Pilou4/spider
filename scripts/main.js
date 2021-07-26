@@ -55,6 +55,7 @@ function init()
     // écouteur au clic déclenche la fonction shoot
     $(document).on('click', shoot);
 
-    createWave(); 
-    renderWave();
+    // createWave();
+    // renderWave();
+    newWave()
 } 

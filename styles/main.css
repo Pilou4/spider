@@ -83,8 +83,20 @@
     position: absolute; 
     z-index: 2; 
     color: #FF8100; 
-    font-family: 'Fredererika the Great' 
+    font-family: 'Fredererika the Great'; 
     font-size:80%; 
     pointer-events: none; 
     font-weight: bold; 
+}
+.waveLevel 
+{ 
+    font-size: 400%; 
+    text-align: center; 
+    width: 100%; 
+    display: inline-block; 
+    top: -100px; 
+    transition: all 2s linear; 
+    position: absolute; 
+    pointer-events: none; 
+    opacity: 0; 
 } 

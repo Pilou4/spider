@@ -33,7 +33,8 @@ function createWave()
                 orientation: orientation
             } 
         ); 
-    } 
+    }
+    renderWave();
 }
 
 
@@ -79,5 +80,32 @@ function renderWave ()
             renderWave,
             2000
         ); 
+    }
+    else 
+    { 
+        newWave(); 
     } 
+}
+
+function newWave() 
+{ 
+    currentWave++; 
+    $('.waveLevel').css(
+        {
+            opacity: 1,
+            top: '200px'
+        } 
+    ).text('Vague ' + currentWave); 
+    setTimeout(
+        e =>
+        {
+            $('.waveLevel').css(
+                { 
+                    opacity: 0, 
+                    top: '-100px' 
+                } 
+            ); 
+            createWave(); 
+        },3000 
+    ); 
 } 
