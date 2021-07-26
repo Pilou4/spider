@@ -1,0 +1,62 @@
+.mainContainer 
+{ 
+    position: absolute; 
+    left: 25%; 
+    top: 1%; 
+    max-width: 800px; 
+    width: 98%; 
+    max-height: 720px; 
+    height: 98%; 
+    border: solid 1px red; 
+}
+.informationZone 
+{ 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 13%; 
+    border-top: solid 1px blue; 
+}
+.gameArea 
+{ 
+    width: 800px; 
+    height: 600px; 
+    position: absolute; 
+    left: 0; 
+    top: 16%; 
+    z-index: 0; 
+    overflow: hidden; 
+    background: solid 1px green; 
+}
+.hero 
+{ 
+    width: 50px; 
+    height: 50px; 
+    position: absolute; 
+    left: 47%; 
+    top: 44%; 
+    transform-origin: center center; 
+    transform: rotate(0deg); 
+    pointer-events: none; 
+    z-index: 2; 
+}
+.bullet 
+{ 
+    position: absolute; 
+    transform-origin: center center; 
+    width: 8px; 
+    height: 8px; 
+    border-radius: 50%; 
+    border: solid 1px gainsboro; 
+    box-shadow: inset 0 0 5px #FFFF, 
+            inset 2px 0 8px #FF00FF, 
+            inset -2px 0 8px #00FFFF, 
+            inset 2px 0 30px #FF00FF, 
+            inset -2px 0 30px #00FFFF, 
+            0 0 5px #FFFFFF, 
+            -1px 0 8px #FF00FF, 
+            1px 0 8px #00FFFF; 
+    pointer-events: none; 
+    z-index: 1; 
+} 
