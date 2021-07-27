@@ -99,4 +99,77 @@
     position: absolute; 
     pointer-events: none; 
     opacity: 0; 
+}
+.scoreZone 
+{ 
+    position: absolute; 
+    right: 0; 
+    width: 70%; 
+    height: 70%; 
+    color: lemonchiffon; 
+}
+.currentScore 
+{ 
+    font-family: 'Gruppo'; 
+    font-size: 210%; 
+    font-weight: bold; 
+    width: 170px; 
+    display: inline-block; 
+    text-align: right; 
+    margin-top: 14px; 
+} 
+.statTitle 
+{ 
+    display: inline-block; 
+    width: 40px; 
+    text-align: center; 
+    font-size: 70%; 
+} 
+.statValue 
+{ 
+    display: inline-block; 
+    width: 40px; 
+    text-align: center; 
+    font-weight: bold; 
+    font-family: Gruppo; 
+} 
+#hallOfFame 
+{ 
+    width: 380px; 
+    display: inline-block; 
+    position: absolute; 
+    right: 0; 
+    top: 0; 
+} 
+.bestTenContainer 
+{ 
+    display: inline-block; 
+    width: 110px; 
+    height: 90px; 
+    vertical-align: top; 
+    text-align: right; 
+} 
+.bestTen 
+{ 
+    font-family: Gruppo; 
+    font-size: 70%; 
+    display: inline-block; 
+    width: 77px; 
+    color: goldenrod; 
+} 
+.lastFiveContainer 
+{ 
+    display: inline-block; 
+    width: 110px; 
+    height: 90px; 
+    text-align: right; 
+} 
+.lastFive 
+{ 
+    font-family: Gruppo; 
+    font-size: 69%; 
+    display: inline-block; 
+    width: 75px; 
+    text-align: right; 
+    color: palegreen; 
 } 

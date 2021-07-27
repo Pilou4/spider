@@ -138,6 +138,7 @@ function checkImpact(bullet)
                 {
                     // inGameSpiders.slice(inGameSpiders.indexOf(e), 1);
                     // e.htmlElement.remove();
+                    hits++;
                     inGameSpiders.splice(inGameSpiders.indexOf(e), 1); 
                     e.htmlElement.remove();
                     $('.gameArea').append('<img class="explosion"src="images/smoke1.png" data-id="' + no + '">');
@@ -175,27 +176,10 @@ function checkImpact(bullet)
                 }
                 // Animation pour affiché score au moment de l'impact
                 let points = (50 + parseInt(Math.random() * 50));
-                playerScore += points;
-                $('.gameArea').append('<label class="points" data-id="' + no + '">' + points + '</label>'); 
-                $('.points[data-id="' + no + '"]').css(
-                    {
-                        left: (position.left - decalage.left) + (size.width / 2) + 'px', 
-                        top: (position.top - decalage.top) + (size.height / 2 ) + 'px' 
-                    } 
-                ); 
-                $('.points[data-id="' + no + '"]').animate (
-                    {
-                        opacity: 0, 
-                        top: '-50px' 
-                    }, 
-                    { 
-                        duration: 1000 + (position.top * 4), 
-                        easing: 'linear', 
-                        complete: function () 
-                        { 
-                            $('.gameArea').find(this).remove(); 
-                        } 
-                    } 
+                addToScore(
+                    points, {left: (position.left - decalage.left) +
+                    (size.width / 2), top: (position.top - decalage.top) + 
+                    (size.height / 2 ), duration: 1000 + (position.top * 4)}
                 );
             }
         ); 

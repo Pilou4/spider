@@ -9,7 +9,8 @@
         <!-- <link rel="stylesheet" type="text/css" href="styles\normalize.css"> 
         <script type="text/javascript" src="scripts/jQuery-331.min.js"></script>  -->
         <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script type="text/javascript" src="scripts/heroManager.js"></script> 
+        <script type="text/javascript" src="scripts/heroManager.js"></script>
+        <script type="text/javascript" src="scripts/scoreManager.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script> 
         <script type="text/javascript" src="scripts/waveManager.js"></script> 
         <title>Pris au piège</title>
@@ -20,12 +21,30 @@
                    <div class="titleZone"></div> 
                    <div class="logoZone"></div> 
                    <div class="optionZone"></div> 
-                   <div class="scoreZone"></div> 
+                   <div class="scoreZone">
+                        <label class="currentScore"></label> 
+                        <div class="statistics">
+                            <label class="statTitle">Vague</label> 
+                            <label class="statTitle">Ennemis</label> 
+                            <label class="statTitle">Vies</label> 
+                            <label class="statTitle">Succès</label> 
+                            <br> 
+                            <label id="waveNo" class="statValue"></label> 
+                            <label id="spidersNumber" class="statValue"></label> 
+                            <label id="lives" class="statValue"></label> 
+                            <label id="killedSpiders" class="statValue"></label>
+                        </div>
+                        <div id="hallOfFame"> 
+                            <div class="bestTenContainer" id="BTOne"></div> 
+                            <div class="bestTenContainer" id="BTTwo"></div> 
+                            <div class="lastFiveContainer"></div> 
+                        </div>
+                   </div> 
             </div> 
             <div class="gameArea">
                 <label class="waveLevel"></label> 
-                <img class="hero" src="images/mouche.png"></div>
-            </div> 
-     </div> 
+                <img class="hero" src="images/mouche.png">
+            </div>
+        </div> 
     </body>
 </html>

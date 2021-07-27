@@ -1,11 +1,14 @@
 // numéro de la vague
-let currentWave = 1;
+let currentWave = 0;
 // enemie générer pas encore en jeu
 let spiders = [];
 // stocker les arraignées au fur et mesure de leur insertion
 let inGameSpiders = [];
 let playerScore = 0 
 let currentLevel = 1;
+let heroLives = 3;
+let bestScores = {tenBests: [], lastFive: []}; 
+let hits = 0; 
 
 $(document).ready(init);
 

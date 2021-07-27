@@ -71,8 +71,38 @@ function renderWave ()
                         $(this).attr('src', 'images/ennemiPosition' + (1 + Math.ceil(progression * 10000) % 3) + '.png');
                     }
                     $(this).attr('data-step', step);
-                } 
-            } 
+
+                    let spiderPosition = $(this).offset(); 
+                    let heroPosition = $('.hero').offset(); 
+                    let radialCoords = cartesianToPolar(spiderPosition.left + ($(this).width() * spider.PV / 2), 
+                        spiderPosition.top + ($(this).height() * spider.PV / 2),
+                        heroPosition.left + ($('.hero').width() / 2),
+                        heroPosition.top + ($('.hero').height() / 2)); 
+                    if (radialCoords.distance <= 15 * spider.PV) 
+                    { 
+                        let spiderThing = $(this); 
+                        let blinkTime = 10; 
+                        heroLives--; 
+                        spiderThing.remove();
+                        showStats(); 
+                        let theSpider = inGameSpiders.find(f => f.id == spider.id); 
+                        inGameSpiders.splice(inGameSpiders.indexOf(theSpider), 1); 
+                        let blink = function () 
+                        { 
+                            $('.hero').css('opacity', blinkTime-- % 2 == 1 ? 1 : 0); 
+                            if (blinkTime > 0) 
+                            { 
+                               setTimeout(blink, 100); 
+                            } 
+                            else 
+                            { 
+                               $('.hero').css('opacity', 1); 
+                            } 
+                        }; 
+                        blink(); 
+                    } 
+                }
+            },
         );
         spider.htmlElement = $('.spider[data-id="' + spider.id + '"]'); 
         inGameSpiders.push(spider); 
@@ -84,7 +114,8 @@ function renderWave ()
     else 
     { 
         newWave(); 
-    } 
+    }
+    showStats();  
 }
 
 function newWave() 
