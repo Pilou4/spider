@@ -21,7 +21,8 @@ let extraNames = ['Renforts ennemis', 'Dérèglement de la visée',
 'Enrayement du tir', 'Projectiles perforants', 'Tir en éventail', 
 'Tir à fragmentation', 'Vie supplémentaire'];
 let canShoot = false;
-let username = "AAA"; 
+let username = "AAA";
+let difficultyLevel;
 
 $(document).ready(init);
 
@@ -62,9 +63,10 @@ function guid()
 } 
 
 function startGame(e) 
-{ 
+{
     $('.mainMenu').css ("display", "none"); 
-    $('.spider,.bullet,.extra').remove(); 
+    $('.spider,.bullet,.extra').remove();
+    difficultyLevel = +$('.selected').attr('data-level');
     gameIsOn = true; 
     currentWave = 0; 
     spiders = []; 
@@ -92,9 +94,16 @@ function showMainMenu()
     $('.gameOverZone').addClass ("gameNotOver"); 
     $('.mainMenu').css ("display", "initial"); 
 } 
- 
+
+function setDifficultyLevel(e) 
+{ 
+    $('.selected').removeClass('selected'); 
+    $(e.currentTarget).addClass('selected'); 
+}
+
 function init() 
 {
+    $('.difficulty').on ('click', setDifficultyLevel); 
     // empécher eventuel effet de bord (eviter le glisser-coller en cliquant avec la souris)
     $(document).attr('unselectable', 'on').css('user-select','none').css('MozUserSelect', 'none').on('selectstart', false);
     // sélectionner le bloc représentant l’aire de jeu et d’exécuter une fonction dédiée lorsque l’évènement de survol est déclenché.

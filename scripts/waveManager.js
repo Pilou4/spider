@@ -68,7 +68,7 @@ function renderWave ()
                 top: spider.coords.top + 'px' 
             }, 
             { 
-                duration: 20000 - (spider.PV == 1 ? 10000 : spider.PV == 2 ? -10000 : 0), 
+                duration: 20000 - (spider.PV == 1 ? 10000 : spider.PV == 3 ? -10000 : 0) - ((difficultyLevel - 1) * 1500),  
                 easing: 'linear',
                 // change image arraigné pour animation
                 progress: function (animation, progression, timeleft) 
@@ -121,7 +121,7 @@ function renderWave ()
         inGameSpiders.push(spider); 
         setTimeout (
             renderWave,
-            2000
+            Math.max(500, (2000 - (difficultyLevel * 250)) - (currentWave * 25))
         ); 
     }
     else 
@@ -134,7 +134,7 @@ function renderWave ()
 function newWave() 
 { 
     currentWave++;
-    baseExtraChance = 100 - (5 + (parseInt(currentWave / 5) * 2)); 
+    baseExtraChance = 100 - (5 + (parseInt(currentWave / 5) * 2)) - ((5 - difficultyLevel) * 5);
     $('.waveLevel').css(
         {
             opacity: 1,
@@ -162,7 +162,12 @@ function checkForExtra(position)
     if (Math.random() * 100 > baseExtraChance) 
     { 
         type = parseInt(Math.random() * extraNames.length); 
-        extra = $('<div class="extra" data-type="' + type + '"><label>Ex' + '</label></div>'); 
+        if (difficultyLevel == 1 && extraNames[type].type == 'malus') 
+        { 
+            type = parseInt(Math.random() * extraNames.length); 
+        } 
+        extra = $('<div class="extra' + (difficultyLevel <= 2 ? ' '  +  
+        extraNames[type].type : '') + '" data-type="' + type + '"><label>Ex' + '</label></div>'); 
         extra.css({left: position.left + 'px', top: position.top + 'px', transform: 'rotate(' + (Math.random() * 360) + 'deg)'}); 
         setTimeout(
             e => {

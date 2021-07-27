@@ -197,8 +197,8 @@ function checkImpact(bullet)
                             } 
                         } 
                     ); 
-                } 
-                let points = (50 + parseInt(Math.random() * 50)); 
+                }
+                let points = (50 + parseInt(Math.random() * 50)) * (difficultyLevel > 3 ? 2 : 1); 
                 addToScore(points, 
                     {
                         left: (position.left - decalage.left) + (size.width / 2),
