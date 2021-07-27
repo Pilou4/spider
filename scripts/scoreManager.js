@@ -64,9 +64,16 @@ function showStats()
 function updateHallOfFame() 
 { 
     let playerName = 'AAA'; 
-    bestScores.tenBests.push({name: playerName, score: playerScore}); 
-    bestScores.tenBests.sort((a, b) => a.score > b.score ? -1 : a.score == b.score ? 0 : 1);
-    bestScores.tenBests = bestScores.tenBests.slice(0, 10); 
+    if (playerName == "") 
+    { 
+        playerName = "AAA" 
+    } 
+    if (!gameIsOn) 
+    { 
+        bestScores.tenBests.push({name: playerName, score: playerScore}); 
+        bestScores.tenBests.sort((a, b) => a.score > b.score ? -1 : a.score == b.score ? 0 : 1); 
+        bestScores.tenBests = bestScores.tenBests.slice(0, 10); 
+    } 
     showHallOfFame(); 
 }
 
@@ -87,4 +94,14 @@ function showHallOfFame()
     $('#BTOne').empty().append(TBScoresOne); 
     $('#BTTwo').empty().append(TBScoresTwo); 
     $('.lastFiveContainer').empty().append(LFScores); 
-} 
+}
+
+function gameOver() 
+{ 
+    gameIsOn = false; 
+    $.fx.stop(false, false); 
+    $('.gameOverZone .message:first').text("Bravo !!!"); 
+    $('.gameOverZone .message:last').html('Vous avez réussi à marquer <span class="bigPoints">' + playerScore + '</span> points.'); 
+    $('.gameOverZone').removeClass('gameNotOver');
+    $('.gameOverZone .userName').val("AAA").select().focus();
+}

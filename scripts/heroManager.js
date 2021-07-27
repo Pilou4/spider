@@ -3,7 +3,11 @@
 // size = dimensions du héros.
 // propriété .pageX et .pageY de l’objet évènement e renvoi la position horizontale et la position verticale du curseur de la souris
 function rotateDiv(e) 
-{ 
+{
+    if (!gameIsOn) 
+    { 
+        return; 
+    } 
     let coords; 
     let size 
     let polar 
@@ -24,7 +28,11 @@ function rotateDiv(e)
 // target = resultat de la fonction polarToCartesian
 // orientation = récupère les coordonnées left et top 
 function shoot(e) 
-{ 
+{
+    if (!gameIsOn) 
+    { 
+        return; 
+    } 
     let gameArea; 
     let shooter; 
     let offsets; 

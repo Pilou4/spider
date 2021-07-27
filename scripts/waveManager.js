@@ -45,6 +45,10 @@ function addSpidersToCurrentWave(number)
 // Envoyer les araignées dans l’aire de jeu
 function renderWave () 
 {
+    if (!gameIsOn) 
+    { 
+        return; 
+    } 
     let spider; 
     spider = spiders.shift(); 
     if (spider) 
@@ -86,7 +90,12 @@ function renderWave ()
                     { 
                         let spiderThing = $(this); 
                         let blinkTime = 10; 
-                        heroLives--; 
+                        heroLives--;
+                        if (heroLives < 0) 
+                        { 
+                            gameOver(); 
+                            return; 
+                        } 
                         spiderThing.remove();
                         showStats(); 
                         let theSpider = inGameSpiders.find(f => f.id == spider.id); 

@@ -1,3 +1,4 @@
+let gameIsOn = false;
 // numéro de la vague
 let currentWave = 0;
 // enemie générer pas encore en jeu
@@ -20,6 +21,7 @@ let extraNames = ['Renforts ennemis', 'Dérèglement de la visée',
 'Enrayement du tir', 'Projectiles perforants', 'Tir en éventail', 
 'Tir à fragmentation', 'Vie supplémentaire'];
 let canShoot = false;
+let username = "AAA"; 
 
 $(document).ready(init);
 
@@ -59,6 +61,37 @@ function guid()
     return group(8) + "-" + group(4) + "-" + group(4) + "-" + group(4) + "-" + group(12); 
 } 
 
+function startGame(e) 
+{ 
+    $('.mainMenu').css ("display", "none"); 
+    $('.spider,.bullet,.extra').remove(); 
+    gameIsOn = true; 
+    currentWave = 0; 
+    spiders = []; 
+    inGameSpiders = []; 
+    inGameExtras = []; 
+    playerScore = 0; 
+    heroLives = 2; 
+    hits = 0; 
+    tirEventail = false; 
+    tirFragment = false; 
+    tirPerforant = false; 
+    tirDeregle = false; 
+    tirEnraye = false; 
+    canShoot = false; 
+    e.stopPropagation(); 
+    updateScore(); 
+    newWave(); 
+}
+
+function showMainMenu() 
+{ 
+    userName = $('.userName').val(); 
+    updateScore(); 
+    saveScores(); 
+    $('.gameOverZone').addClass ("gameNotOver"); 
+    $('.mainMenu').css ("display", "initial"); 
+} 
  
 function init() 
 {
@@ -68,8 +101,9 @@ function init()
     $('.gameArea').on('mousemove', rotateDiv);
     // écouteur au clic déclenche la fonction shoot
     $(document).on('click', shoot);
-
+    $('.startGame').on('click', startGame);
+    $('.applyButton').on('click', showMainMenu); 
     // createWave();
     // renderWave();
-    newWave()
+    // newWave();
 } 

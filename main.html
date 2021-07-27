@@ -18,7 +18,7 @@
     <body>
         <div class="mainContainer"> 
             <div class="informationZone"> 
-                   <div class="titleZone"></div> 
+                <div class="titleZone"><h2>Pris au piège</h2></div> 
                    <div class="logoZone"></div> 
                    <div class="optionZone"></div> 
                    <div class="scoreZone">
@@ -40,10 +40,54 @@
                             <div class="lastFiveContainer"></div> 
                         </div>
                    </div> 
+            </div>
+            <div class="mainMenu"> 
+                <div class="rules">
+                    <p>
+                        Vous incarnez une petite mouche prise dans le piège 
+                        mortel d'une toile d'araignée. Engluée, vous ne pouvez pas vous 
+                        déplacer et restez collée au centre de la toile.
+                    </p> 
+                    <p>
+                        Tout ce que vous pouvez faire c'est tourner sur 
+                        vous-même et tirer des projectiles vers les araignées qui, alertées 
+                        par les vibrations de la toile, se précipitent vers vous pour vous 
+                        dévorer.
+                    </p> 
+                    <p>
+                        La vitesse de déplacement et la robustesse de ces 
+                        araignées dépendent toutes les deux de leur taille. Les plus grosses 
+                        nécessitent d'être touchées 3 fois pour être détruites et sont les 
+                        moins rapides.
+                    </p> 
+                    <p>
+                        De temps à autre une araignée détruite laisse tomber un 
+                        objet. Si vous tirez dessus, vous déclenchez un mode qui peut vous 
+                        apporter de l'aide, mais parfois un objet ramassé peut au contraire 
+                        rendre l'aventure plus difficile.
+                    </p> 
+                    <p>
+                        Au début de la partie, vous disposez de 3 vies et le jeu 
+                        se termine lorsqu'elles ont toutes été dépensées.
+                    </p> 
+                    <p>Bonne partie !</p> 
+                </div> 
+                <button class="startGame">Démarrer une partie</button> 
             </div> 
             <div class="gameArea">
+                <div class="web"></div>
                 <label class="waveLevel"></label> 
                 <img class="hero" src="images/mouche.png">
+                <div class="gameOverZone gameNotOver"> 
+                    <label class="title">G&nbsp;A&nbsp;M&nbsp;E&nbsp;&nbsp;&nbsp;&nbsp;O&nbsp;V&nbsp; E&nbsp;R</label> 
+                    <p class="message"></p> 
+                    <p class="message"></p>
+                    <fieldset> 
+                        <label>Entrez votre nom :</label> 
+                        <input type="text" class="userName"> 
+                    </fieldset> 
+                    <button class="applyButton">Valider</button> 
+                </div> 
             </div>
         </div> 
     </body>
