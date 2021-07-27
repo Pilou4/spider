@@ -1,7 +1,12 @@
 // Création des ennemis
 function createWave() 
 { 
-    let number = 10 + currentLevel; 
+    addSpidersToCurrentWave(10 + currentWave); 
+    renderWave(); 
+} 
+
+function addSpidersToCurrentWave(number) 
+{ 
     let gameArea = $('.gameArea'); 
     let target = $('.hero'); 
     let offsets = {left: gameArea.offset().left, top: gameArea.offset().top}; 
@@ -10,8 +15,8 @@ function createWave()
         left: target.offset().left + (size.width / 4) - offsets.left,
         top: target.offset().top + (size.height / 4) - offsets.top
     }; 
-    for (let t = 0; t < number; t++)
-    {
+    for (let t = 0; t < number; t++) 
+    { 
         let distance = 400 + parseInt((Math.random() * 100)); 
         let PV = parseInt(Math.random() * 3) + 1; 
         let anglePos = parseInt(Math.random() * 359); 
@@ -21,22 +26,21 @@ function createWave()
             coords.top,
             coords.left + targetCartesianCoords.left,
             coords.top + targetCartesianCoords.top
-            ); 
+        ); 
         spiders.push(
-            {
+            { 
                 id: guid(), 
                 PV: PV, 
                 life: PV, 
                 angle: anglePos, 
                 coords: coords, 
                 targetCartesianCoords: targetCartesianCoords, 
-                orientation: orientation
+                orientation: orientation 
             } 
         ); 
-    }
-    renderWave();
-}
-
+    } 
+    showStats(); 
+} 
 
 // Envoyer les araignées dans l’aire de jeu
 function renderWave () 
@@ -120,7 +124,8 @@ function renderWave ()
 
 function newWave() 
 { 
-    currentWave++; 
+    currentWave++;
+    baseExtraChance = 100 - (5 + (parseInt(currentWave / 5) * 2)); 
     $('.waveLevel').css(
         {
             opacity: 1,
@@ -138,5 +143,82 @@ function newWave()
             ); 
             createWave(); 
         },3000 
+    ); 
+}
+
+function checkForExtra(position) 
+{ 
+    let extra; 
+    let type; 
+    if (Math.random() * 100 > baseExtraChance) 
+    { 
+        type = parseInt(Math.random() * extraNames.length); 
+        extra = $('<div class="extra" data-type="' + type + '"><label>Ex' + '</label></div>'); 
+        extra.css({left: position.left + 'px', top: position.top + 'px', transform: 'rotate(' + (Math.random() * 360) + 'deg)'}); 
+        setTimeout(
+            e => {
+                extra.animate(
+                    {
+                        content: ''
+                    },
+                    {
+                        duration: 2000,  
+                        easing: 'linear',  
+                        progress: (animation, progression, timeLeft) => {
+                            if (parseInt(progression * 100) % 10 == 0) 
+                            { 
+                                extra.css('opacity', extra.css('opacity') == 0 ? 1 : 0); 
+                            } 
+                        }, 
+                        complete: e => extra.remove() 
+                    } 
+                ); 
+            }, 
+            3000 
+        ); 
+        $('.gameArea').append(extra); 
+        inGameExtras.push({type: type, htmlElement: extra}); 
+    } 
+}
+
+function applyExtra(e) 
+{ 
+    let no; 
+    let position = e.htmlElement.offset(); 
+    let decalage = $('.gameArea').offset();
+    if (e.type == 0) 
+    { 
+        addSpidersToCurrentWave(parseInt(10 + (Math.random() * 10))); 
+    } 
+    tirDeregle = e.type == 1; 
+    tirEnraye = e.type == 2; 
+    tirPerforant = e.type == 3; 
+    tirEventail = e.type == 4; 
+    tirFragment = e.type == 5;
+    if (e.type == 6) 
+    { 
+        heroLives++; 
+    } 
+    no = guid(); 
+    $('.gameArea').append('<label class="extraName" data-id="' + no + '">' + extraNames[e.type] + '</label>'); 
+    $('.extraName[data-id="' + no + '"]').css(
+        { 
+            left: (position.left - decalage.left) + 'px', 
+            top: (position.top - decalage.top) + 'px' 
+        } 
+    ); 
+    $('.extraName[data-id="' + no + '"]').animate(
+        { 
+            opacity: 0, 
+            top: '-50px' 
+        }, 
+        { 
+            duration: 5000, 
+            easing: 'linear', 
+            complete: function ()
+            { 
+                $('.gameArea').find(this).remove(); 
+            } 
+        } 
     ); 
 } 

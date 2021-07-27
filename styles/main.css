@@ -172,4 +172,39 @@
     width: 75px; 
     text-align: right; 
     color: palegreen; 
+}
+.points, .extraName 
+{ 
+    position: absolute; 
+    z-index: 2; 
+    color: #FF8100; 
+    font-family: 'Frederika the Great'; 
+    font-size:80%; 
+    pointer-events: none; 
+    font-weight: bold; 
 } 
+ .extraName 
+{ 
+    color: tomato; 
+    text-shadow: 0px 0px 3px black; 
+    pointer-events: none; 
+}
+.extra 
+{ 
+    position: absolute; 
+    width: 25px; 
+    height: 25px; 
+    background: chocolate; 
+    border: solid 2px gold; 
+    border-radius: 50%; 
+    color: burlywood; 
+    text-align: center; 
+    transform-origin: center center; 
+    pointer-events: none; 
+} 
+.extra label 
+{ 
+    position: relative; 
+    top: 4px; 
+    pointer-events: none; 
+}  

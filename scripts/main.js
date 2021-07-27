@@ -4,11 +4,22 @@ let currentWave = 0;
 let spiders = [];
 // stocker les arraignées au fur et mesure de leur insertion
 let inGameSpiders = [];
-let playerScore = 0 
+let inGameExtras = [];
+let playerScore = 0; 
 let currentLevel = 1;
 let heroLives = 3;
 let bestScores = {tenBests: [], lastFive: []}; 
-let hits = 0; 
+let hits = 0;
+let baseExtraChance;
+let tirEventail = false; 
+let tirFragment = false; 
+let tirPerforant = false; 
+let tirDeregle = false; 
+let tirEnraye = false; 
+let extraNames = ['Renforts ennemis', 'Dérèglement de la visée',
+'Enrayement du tir', 'Projectiles perforants', 'Tir en éventail', 
+'Tir à fragmentation', 'Vie supplémentaire'];
+let canShoot = false;
 
 $(document).ready(init);
 
