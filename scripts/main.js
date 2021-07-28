@@ -35,7 +35,7 @@ function init()
 {
     // empécher eventuel effet de bord (eviter le glisser-coller en cliquant avec la souris)
     $(document).attr('unselectable', 'on').css('user-select','none').css('MozUserSelect', 'none').on('selectstart', false);
-    // $('.changeSound').on('click', changeVolume);   
+    $('.changeSound').on('click', changeVolume);   
     $('.difficulty').on ('click', setDifficultyLevel); 
     $('.gameArea').on('mousemove', rotateDiv);
     $('.applyButton').on('click', showMainMenu);
