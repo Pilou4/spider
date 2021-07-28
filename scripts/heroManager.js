@@ -9,8 +9,8 @@ function rotateDiv(e)
         return; 
     } 
     let coords; 
-    let size 
-    let polar 
+    let size;
+    let polar; 
     coords = $('.hero').offset(); 
     size = {width: $('.hero').width(), height: $('.hero').height()}; 
     polar = cartesianToPolar(e.pageX, e.pageY, coords.left + (size.width / 2), coords.top + (size.height / 2)); 
@@ -20,13 +20,6 @@ function rotateDiv(e)
         ); 
 }
 
-// gameArea = aire de jeux
-// shooter = mouche
-// offsets = position aire de jeux
-// center = centre du jeux (où est la mouche)
-// vector = coordonnées polaires permettant d'atteindre la cible (c’est-à-dire l’angle et la distance entre le centre de la mouche et le point cliqué)
-// target = resultat de la fonction polarToCartesian
-// orientation = récupère les coordonnées left et top 
 function shoot(e) 
 {
     if (!gameIsOn) 
@@ -66,7 +59,8 @@ function shoot(e)
 }
 
 function createBullet(center, target, orientation) 
-{ 
+{
+    playShootSound(); 
     $('<div class="bullet"></div>').css(
         { 
             left: center.left + "px", 
@@ -88,7 +82,8 @@ function createBullet(center, target, orientation)
             }, 
                 complete: function () 
             {
-                $('.gameArea').find(this).remove(); 
+                $('.gameArea').find(this).remove();
+                delete this; 
             } 
         } 
     ); 
@@ -96,6 +91,7 @@ function createBullet(center, target, orientation)
 
 function checkImpact(bullet) 
 { 
+    // let audio;
     let touchedSpiders = inGameSpiders.filter (
         function (e)
         {
@@ -157,11 +153,16 @@ function checkImpact(bullet)
                 let size = {width: e.htmlElement.width() * e.PV, height: e.htmlElement.height() * e.PV}; 
                 let decalage = $('.gameArea').offset(); 
                 let no = guid(); 
-                e.life--; 
-                bullet.htmlElement.remove(); 
+                e.life--;
+                if (!tirPerforant)
+				{
+					bullet.htmlElement.remove();
+				}
+                playTouchSound();
                 if (e.life <= 0 || tirPerforant)
-                { 
+                {
                     hits++;
+                    playHitSound()
                     inGameSpiders.splice(inGameSpiders.indexOf(e), 1);  
                     e.htmlElement.remove(); 
                     checkForExtra({left: (position.left - decalage.left) + (size.width / 2), top: (position.top - decalage.top) + (size.height / 2 )}); 
@@ -170,7 +171,7 @@ function checkImpact(bullet)
                         { 
                             left: (position.left - decalage.left) + (size.width / 2) + 'px', 
                             top: (position.top - decalage.top) +  (size.height / 2 ) + 'px', 
-                                     transform: 'scale(' + e.PV + ')' 
+                            transform: 'scale(' + e.PV + ')' 
                         } 
                     ); 
                     $('.explosion[data-id="' + no + '"]').animate(
@@ -193,7 +194,8 @@ function checkImpact(bullet)
                             }, 
                             complete: function ()
                             { 
-                                $('.gameArea').find(this).remove(); 
+                                $('.gameArea').find(this).remove();
+                                delete this; 
                             } 
                         } 
                     ); 
@@ -205,7 +207,20 @@ function checkImpact(bullet)
                         top: (position.top - decalage.top) + (size.height / 2 ),
                         duration: 1000 + (position.top * 4)
                     }
-                ); 
+                );
+                if (tirFragment)
+                { 
+                let nb = parseInt(1 + (Math.random() * 3)); 
+                let orientation; 
+                    for (let t = 0; t < nb; t++) 
+                    { 
+                        target = polarToCartesian(800, (Math.random() * 360) * Math.PI / 180); 
+                        orientation = {horizontal: (position.left + target.left) >  
+                        position.left ? 1 : -1, vertical: (position.top + target.top) > 
+                        position.top ? 1 : -1}; 
+                        createBullet({left: (position.left - decalage.left) + (size.width / 2),top: (position.top - decalage.top) + (size.height / 2 )}, target, orientation); 
+                    } 
+                }   
             } 
         ); 
     } 
@@ -254,19 +269,6 @@ function checkImpact(bullet)
                     return true; 
                 } 
             }
-            if (tirFragment)
-            { 
-                let nb = parseInt(1 + (Math.random() * 3)); 
-                let orientation; 
-                for (let t = 0; t < nb; t++) 
-                { 
-                    target = polarToCartesian(800, (Math.random() * 360) * Math.PI / 180); 
-                    orientation = {horizontal: (position.left + target.left) >  
-                    position.left ? 1 : -1, vertical: (position.top + target.top) > 
-                    position.top ? 1 : -1}; 
-                    createBullet({left: (position.left - decalage.left) + (size.width / 2),top: (position.top - decalage.top) + (size.height / 2 )}, target, orientation); 
-                } 
-            }  
             return false; 
         } 
     ); 
@@ -278,11 +280,8 @@ function checkImpact(bullet)
                 let position = e.htmlElement.offset(); 
                 let size = {width: e.htmlElement.width(), height: e.htmlElement.height() * e.PV}; 
                 let decalage = $('.gameArea').offset(); 
-                applyExtra(e); 
-                if (!tirPerforant) 
-                { 
-                    bullet.htmlElement.remove(); 
-                }  
+                applyExtra(e);
+                bullet.htmlElement.remove(); 
                 e.htmlElement.remove(); 
                 inGameExtras.splice(inGameExtras.indexOf(e), 1); 
                 let points = (50 + parseInt(Math.random() * 50)); 

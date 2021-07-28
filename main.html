@@ -11,16 +11,30 @@
         <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
         <script type="text/javascript" src="scripts/heroManager.js"></script>
         <script type="text/javascript" src="scripts/scoreManager.js"></script>
-        <script type="text/javascript" src="scripts/main.js"></script> 
-        <script type="text/javascript" src="scripts/waveManager.js"></script> 
+        <script type="text/javascript" src="scripts/soundManager.js"></script> 
+        <script type="text/javascript" src="scripts/waveManager.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
         <title>Pris au piège</title>
     </head>
     <body>
+        <audio id="sndShoot"><source src="sounds/shoot.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndHit"><source src="sounds/hit.mp3" type="audio/mpeg"></audio>
+        <audio id="sndTouch"><source src="sounds/touch.mp3" type="audio/mpeg"></audio>
+        <audio id="sndWalk"><source src="sounds/walk.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndHeroHit"><source src="sounds/heroHit.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndNewWave"><source src="sounds/newWave.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndFall"><source src="sounds/fall.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndBonus"><source src="sounds/bonus.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndMalus"><source src="sounds/malus.mp3" type="audio/mpeg"></audio> 
+        <audio id="sndGameOver"><source src="sounds/gameOver.mp3" type="audio/mpeg"></audio>
         <div class="mainContainer"> 
             <div class="informationZone"> 
                 <div class="titleZone"><h2>Pris au piège</h2></div> 
                    <div class="logoZone"></div> 
-                   <div class="optionZone"></div> 
+                    <div class="optionZone"> 
+                        <label id="lblDifficultyLevel"></label> 
+                        <label id="lblSpecialMode"></label> 
+                    </div>  
                    <div class="scoreZone">
                         <label class="currentScore"></label> 
                         <div class="statistics">
@@ -80,7 +94,13 @@
                     <label class="difficulty" data-level="4">Difficile</label> 
                     <label class="difficulty" data-level="5">Corsé</label> 
                 </div> 
-                <button class="startGame">Démarrer une partie</button> 
+                <button class="startGame">Démarrer une partie</button>
+                <div class="soundLevel"> 
+                    <label>Niveau sonore</label> 
+                    <label class="changeSound minus">-</label> 
+                    <label class="changeSound plus">+</label> 
+                    <div class="soundLevelValue"></div> 
+                </div>  
             </div> 
             <div class="gameArea">
                 <div class="web"></div>

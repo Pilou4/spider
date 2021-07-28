@@ -50,9 +50,10 @@ function renderWave ()
         return; 
     } 
     let spider; 
-    spider = spiders.shift(); 
+    spider = spiders.shift();  
     if (spider) 
     {
+        playWalkSound();
         $('<img class="spider" data-id="' + spider.id + '"src="./images/ennemiPosition1.png">')
         .css(
             {
@@ -79,7 +80,6 @@ function renderWave ()
                         $(this).attr('src', 'images/ennemiPosition' + (1 + Math.ceil(progression * 10000) % 3) + '.png');
                     }
                     $(this).attr('data-step', step);
-
                     let spiderPosition = $(this).offset(); 
                     let heroPosition = $('.hero').offset(); 
                     let radialCoords = cartesianToPolar(spiderPosition.left + ($(this).width() * spider.PV / 2), 
@@ -91,15 +91,16 @@ function renderWave ()
                         let spiderThing = $(this); 
                         let blinkTime = 10; 
                         heroLives--;
+                        playHeroHitSound();
                         if (heroLives < 0) 
                         { 
                             gameOver(); 
                             return; 
                         } 
                         spiderThing.remove();
-                        showStats(); 
                         let theSpider = inGameSpiders.find(f => f.id == spider.id); 
                         inGameSpiders.splice(inGameSpiders.indexOf(theSpider), 1); 
+                        showStats(); 
                         let blink = function () 
                         { 
                             $('.hero').css('opacity', blinkTime-- % 2 == 1 ? 1 : 0); 
@@ -112,7 +113,8 @@ function renderWave ()
                                $('.hero').css('opacity', 1); 
                             } 
                         }; 
-                        blink(); 
+                        blink();
+                        delete this; 
                     } 
                 }
             },
@@ -132,7 +134,8 @@ function renderWave ()
 }
 
 function newWave() 
-{ 
+{
+    playNewWaveSound();
     currentWave++;
     baseExtraChance = 100 - (5 + (parseInt(currentWave / 5) * 2)) - ((5 - difficultyLevel) * 5);
     $('.waveLevel').css(
@@ -160,21 +163,19 @@ function checkForExtra(position)
     let extra; 
     let type; 
     if (Math.random() * 100 > baseExtraChance) 
-    { 
+    {
+        playFallSound();
         type = parseInt(Math.random() * extraNames.length); 
         if (difficultyLevel == 1 && extraNames[type].type == 'malus') 
         { 
             type = parseInt(Math.random() * extraNames.length); 
         } 
-        extra = $('<div class="extra' + (difficultyLevel <= 2 ? ' '  +  
-        extraNames[type].type : '') + '" data-type="' + type + '"><label>Ex' + '</label></div>'); 
+        extra = $('<div class="extra' + (difficultyLevel <= 2 ? ' '  + extraNames[type].type : '') + '" data-type="' + type + '"><label>Ex' + '</label></div>'); 
         extra.css({left: position.left + 'px', top: position.top + 'px', transform: 'rotate(' + (Math.random() * 360) + 'deg)'}); 
         setTimeout(
             e => {
                 extra.animate(
-                    {
-                        content: ''
-                    },
+                    {content: ''},
                     {
                         duration: 2000,  
                         easing: 'linear',  
@@ -184,7 +185,11 @@ function checkForExtra(position)
                                 extra.css('opacity', extra.css('opacity') == 0 ? 1 : 0); 
                             } 
                         }, 
-                        complete: e => extra.remove() 
+                        complete: e => {
+                            extra.remove();
+                            delete this;
+                        }
+                        
                     } 
                 ); 
             }, 
@@ -200,6 +205,14 @@ function applyExtra(e)
     let no; 
     let position = e.htmlElement.offset(); 
     let decalage = $('.gameArea').offset();
+    if (extraNames[e.type].type == 'malus') 
+    { 
+     playMalusSound(); 
+    } 
+    else 
+    { 
+        playBonusSound(); 
+    } 
     if (e.type == 0) 
     { 
         addSpidersToCurrentWave(parseInt(10 + (Math.random() * 10))); 
@@ -212,9 +225,11 @@ function applyExtra(e)
     if (e.type == 6) 
     { 
         heroLives++; 
-    } 
+    }
+    specialMode = extraNames[e.type].label; 
+    showStats();
     no = guid(); 
-    $('.gameArea').append('<label class="extraName" data-id="' + no + '">' + extraNames[e.type] + '</label>'); 
+    $('.gameArea').append('<label class="extraName" data-id="' + no + '">' + extraNames[e.type].name + '</label>'); 
     $('.extraName[data-id="' + no + '"]').css(
         { 
             left: (position.left - decalage.left) + 'px', 
@@ -231,7 +246,8 @@ function applyExtra(e)
             easing: 'linear', 
             complete: function ()
             { 
-                $('.gameArea').find(this).remove(); 
+                $('.gameArea').find(this).remove();
+                delete this;
             } 
         } 
     ); 

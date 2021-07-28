@@ -1,56 +1,8 @@
-function saveScores() 
-{ 
-    localStorage.setItem("HallOfFame", JSON.stringify(bestScores)); 
-}
-
-function loadScores() 
-{ 
-    let savedData = localStorage.getItem('HallOfFame'); 
-    if (!savedData) 
-    { 
-        saveScores(); 
-    } 
-    else 
-    { 
-        bestScores = JSON.parse(savedData); 
-    } 
-}
-
 function updateScore() 
 { 
     $('.currentScore').text(playerScore);
-    showStats(); 
-}
-
-function addToScore(points, animationParams) 
-{ 
-    let no = guid(); 
-    playerScore += points; 
-    updateScore(); 
-    if (animationParams) 
-    { 
-       $('.gameArea').append('<label class="points" data-id="' + no + '">' + points + '</label>'); 
-       $('.points[data-id="' + no + '"]').css(
-           { 
-                left: animationParams.left + 'px', 
-                top: animationParams.top + 'px' 
-            } 
-        ); 
-       $('.points[data-id="' + no + '"]').animate (
-           { 
-                opacity: 0, 
-                top: '-50px' 
-            }, 
-            { 
-                duration: animationParams.duration, 
-                easing: 'linear', 
-                complete: function ()
-                { 
-                    $('.gameArea').find(this).remove(); 
-                } 
-            } 
-        ); 
-    } 
+    showStats();
+    updateHallOfFame();
 }
 
 function showStats() 
@@ -58,7 +10,9 @@ function showStats()
     $("#waveNo").text(currentWave); 
     $("#spidersNumber").text(spiders.length + " - " + inGameSpiders.length); 
     $("#lives").text(heroLives + 1); 
-    $("#killedSpiders").text(hits); 
+    $("#killedSpiders").text(hits);
+    $('#lblDifficultyLevel').text(levels[lblDifficultyLevel]); 
+    $('#lblSpecialMode').text(specialMode);  
 }
 
 function updateHallOfFame() 
@@ -96,8 +50,66 @@ function showHallOfFame()
     $('.lastFiveContainer').empty().append(LFScores); 
 }
 
-function gameOver() 
+
+function saveScores() 
 { 
+    localStorage.setItem("HallOfFame", JSON.stringify(bestScores)); 
+}
+
+function loadScores()
+{
+	let savedData = localStorage.getItem('HallOfFame');
+	if (!savedData)
+	{
+		saveScores();
+	}
+	else
+	{
+		bestScores = JSON.parse(savedData);
+	}
+	let ctlBest = 10 - bestScores.tenBests.length;
+	if (ctlBest > 0)
+	{
+		bestScores.tenBests.push(...String(' '.repeat(ctlBest)).split('').fill({name: 'AAA', score: 0}));
+	}
+	showHallOfFame();
+}
+
+function addToScore(points, animationParams) 
+{ 
+    let no = guid(); 
+    playerScore += points; 
+    updateScore(); 
+    if (animationParams) 
+    { 
+       $('.gameArea').append('<label class="points" data-id="' + no + '">' + points + '</label>'); 
+       $('.points[data-id="' + no + '"]').css(
+           { 
+                left: animationParams.left + 'px', 
+                top: animationParams.top + 'px' 
+            } 
+        ); 
+       $('.points[data-id="' + no + '"]').animate (
+           { 
+                opacity: 0, 
+                top: '-50px' 
+            }, 
+            { 
+                duration: animationParams.duration, 
+                easing: 'linear', 
+                complete: function ()
+                { 
+                    $('.gameArea').find(this).remove();
+                    delete this; 
+                } 
+            } 
+        ); 
+    } 
+}
+
+function gameOver() 
+{
+    playGameOverSound(); 
     gameIsOn = false; 
     $.fx.stop(false, false); 
     $('.gameOverZone .message:first').text("Bravo !!!"); 
