@@ -100,6 +100,9 @@ function guid()
     return group(8) + "-" + group(4) + "-" + group(4) + "-" + group(4) + "-" + group(12); 
 } 
 
+// Renvoi objet contenant 2 propriétés .angle et .distance
+// .distance = distance en x1 et y1 et entre le point x2 et y2
+// .angle = angle de la droite passant par ces 2 points dans un repère cartésien centré en (x1, y1)
 function cartesianToPolar (x1, y1, x2, y2) 
 { 
     let x = x2 - x1; 

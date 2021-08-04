@@ -5,7 +5,7 @@
 function rotateDiv(e) 
 {
     if (!gameIsOn) 
-    { 
+    {
         return; 
     } 
     let coords; 
@@ -20,6 +20,11 @@ function rotateDiv(e)
         ); 
 }
 
+// offsets = positions de l'aire de jeu
+// center = position du centre (où est citué la mouche)
+// vector = coordonnées polaire permettant d'atteindre la cible (l’angle et la distance entre le centre de la mouche et le point cliqué.)
+// target = resultat de la fonction polarToCartesian
+// orientation = propriété horizontal et vertical
 function shoot(e) 
 {
     if (!gameIsOn) 
