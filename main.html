@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,34 +27,36 @@
         <audio id="sndBonus"><source src="sounds/bonus.mp3" type="audio/mpeg"></audio> 
         <audio id="sndMalus"><source src="sounds/malus.mp3" type="audio/mpeg"></audio> 
         <audio id="sndGameOver"><source src="sounds/gameOver.mp3" type="audio/mpeg"></audio>
-        <div class="mainContainer"> 
-            <div class="informationZone"> 
-                <div class="titleZone"><h2>Pris au piège</h2></div> 
-                   <div class="logoZone"></div> 
-                    <div class="optionZone"> 
-                        <label id="lblDifficultyLevel"></label> 
-                        <label id="lblSpecialMode"></label> 
-                    </div>  
-                   <div class="scoreZone">
-                        <label class="currentScore"></label> 
-                        <div class="statistics">
-                            <label class="statTitle">Vague</label> 
-                            <label class="statTitle">Ennemis</label> 
-                            <label class="statTitle">Vies</label> 
-                            <label class="statTitle">Succès</label> 
-                            <br> 
-                            <label id="waveNo" class="statValue"></label> 
-                            <label id="spidersNumber" class="statValue"></label> 
-                            <label id="lives" class="statValue"></label> 
-                            <label id="killedSpiders" class="statValue"></label>
-                        </div>
-                        <div id="hallOfFame"> 
-                            <div class="bestTenContainer" id="BTOne"></div> 
-                            <div class="bestTenContainer" id="BTTwo"></div> 
-                            <div class="lastFiveContainer"></div> 
-                        </div>
-                   </div> 
-            </div>
+        <main class="mainContainer"> 
+            <header class="informationZone"> 
+                <div class="titleZone">
+                    <h2>Pris au piège</h2>
+                </div> 
+                <div class="logoZone"></div> 
+                 <div class="optionZone"> 
+                     <label id="lblDifficultyLevel"></label> 
+                     <label id="lblSpecialMode"></label> 
+                 </div>  
+                <div class="scoreZone">
+                    <label class="currentScore"></label> 
+                    <div class="statistics">
+                        <label class="statTitle">Vague</label> 
+                        <label class="statTitle">Ennemis</label> 
+                        <label class="statTitle">Vies</label> 
+                        <label class="statTitle">Succès</label> 
+                        <br> 
+                        <label id="waveNo" class="statValue"></label> 
+                        <label id="spidersNumber" class="statValue"></label> 
+                        <label id="lives" class="statValue"></label> 
+                        <label id="killedSpiders" class="statValue"></label>
+                    </div>
+                    <div id="hallOfFame"> 
+                        <div class="bestTenContainer" id="BTOne"></div> 
+                        <div class="bestTenContainer" id="BTTwo"></div> 
+                        <div class="lastFiveContainer"></div> 
+                    </div>
+                </div> 
+            </header>
             <div class="mainMenu"> 
                 <div class="rules">
                     <p>
@@ -117,6 +119,6 @@
                     <button class="applyButton">Valider</button> 
                 </div> 
             </div>
-        </div> 
+        </main> 
     </body>
 </html>
